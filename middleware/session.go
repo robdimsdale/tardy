@@ -22,7 +22,7 @@ func NewAuth(
 	store *sessions.CookieStore,
 ) Middleware {
 	return auth{
-		logger:        logger,
+		logger:        logger.Session("middleware-session"),
 		cookieHandler: cookieHandler,
 		store:         store,
 	}
@@ -41,14 +41,23 @@ func (s auth) Wrap(next http.Handler) http.Handler {
 }
 
 func (s auth) unauthenticatedAccessAllowedForURL(url string) bool {
-	openURLs := []string{"/login", "/static"}
+	allowedPrefixes := []string{"/login", "/static"}
+	allowedURLs := []string{"/"}
 
-	for _, u := range openURLs {
+	for _, u := range allowedPrefixes {
 		if strings.HasPrefix(url, u) {
+			s.logger.Debug("unauthenticated access allowed for URL Prefix", lager.Data{"url-prefix": u, "url": url})
+			return true
+		}
+	}
+
+	for _, u := range allowedURLs {
+		if url == u {
 			s.logger.Debug("unauthenticated access allowed for URL", lager.Data{"url": url})
 			return true
 		}
 	}
+
 	s.logger.Debug("authenticated access required for URL", lager.Data{"url": url})
 	return false
 }
@@ -60,8 +69,6 @@ func (s auth) validSession(w http.ResponseWriter, r *http.Request) bool {
 		http.Error(w, err.Error(), 500)
 		return false
 	}
-
-	fmt.Printf("session %+v\n", session.Values)
 
 	accessTokenInterface := session.Values["accessToken"]
 	if accessTokenInterface == nil {

@@ -10,6 +10,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
+	"github.com/robdimsdale/tardy/api/tasks"
 	"github.com/robdimsdale/tardy/logger"
 	"github.com/robdimsdale/tardy/middleware"
 	"github.com/robdimsdale/tardy/web/home"
@@ -69,6 +70,7 @@ func main() {
 	cookieStore := sessions.NewCookieStore([]byte("something-very-secret"))
 
 	homeHandler := home.NewHandler(logger, clientID, cookieStore)
+	tasksHandler := tasks.NewHandler(logger, clientID, cookieStore)
 
 	cookieMaxAge := 3600
 	loginHandler := oauth.NewHandler(
@@ -89,6 +91,9 @@ func main() {
 	rtr.HandleFunc("/login", loginHandler.LoginGET).Methods("GET")
 	rtr.HandleFunc("/login-resp", loginHandler.LoginResponse).Methods("GET")
 	rtr.HandleFunc("/logout", loginHandler.LogoutPOST).Methods("POST")
+
+	a := rtr.PathPrefix("/api/v1").Subrouter()
+	a.HandleFunc("/tasks", tasksHandler.Tasks).Methods("GET")
 
 	m := middleware.Chain{
 		middleware.NewAuth(logger, cookieHandler, cookieStore),

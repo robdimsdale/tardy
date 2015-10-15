@@ -1,4 +1,4 @@
-package home
+package tasks
 
 import (
 	"encoding/json"
@@ -15,7 +15,7 @@ import (
 )
 
 type Handler interface {
-	Home(w http.ResponseWriter, r *http.Request)
+	Tasks(w http.ResponseWriter, r *http.Request)
 }
 
 type handler struct {
@@ -30,13 +30,13 @@ func NewHandler(
 	store *sessions.CookieStore,
 ) Handler {
 	return &handler{
-		logger:   logger.Session("handler-home"),
+		logger:   logger.Session("api-v1-tasks"),
 		clientID: clientID,
 		store:    store,
 	}
 }
 
-func (h handler) Home(w http.ResponseWriter, r *http.Request) {
+func (h handler) Tasks(w http.ResponseWriter, r *http.Request) {
 	session, err := h.store.Get(r, "session-name")
 	if err != nil {
 		h.logger.Error("", err)

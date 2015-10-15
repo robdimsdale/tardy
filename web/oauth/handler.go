@@ -42,7 +42,7 @@ func NewHandler(
 	secretState string,
 ) Handler {
 	return &handler{
-		logger:        logger.Session("session-oauth-handler"),
+		logger:        logger.Session("handler-oauth"),
 		cookieHandler: cookieHandler,
 		cookieMaxAge:  cookieMaxAge,
 		store:         store,
