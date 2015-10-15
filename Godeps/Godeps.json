@@ -6,10 +6,6 @@
 	],
 	"Deps": [
 		{
-			"ImportPath": "github.com/gorilla/context",
-			"Rev": "1c83b3eabd45b6d76072b66b746c20815fb2872d"
-		},
-		{
 			"ImportPath": "github.com/gorilla/mux",
 			"Rev": "8965bfef36e398a40fa4afbe4e22eea61cb8db86"
 		},
@@ -27,8 +23,8 @@
 		},
 		{
 			"ImportPath": "github.com/robdimsdale/wl",
-			"Comment": "v1.1.1-5-g5d1671b",
-			"Rev": "5d1671bb9bf53a61f5c8db8a00f8c62adcf33e81"
+			"Comment": "v1.1.1-6-g1c493fe",
+			"Rev": "1c493fe59f8b5f2718c8e6de00a9d437dcd4e8fb"
 		}
 	]
 }

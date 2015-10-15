@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/gorilla/mux"
-	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/gorilla/securecookie"
-	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/gorilla/sessions"
+	"github.com/gorilla/mux"
+	"github.com/gorilla/securecookie"
+	"github.com/gorilla/sessions"
 	"github.com/robdimsdale/tardy/logger"
 	"github.com/robdimsdale/tardy/middleware"
 	"github.com/robdimsdale/tardy/web/home"

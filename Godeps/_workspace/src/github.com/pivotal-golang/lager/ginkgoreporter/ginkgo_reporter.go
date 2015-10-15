@@ -7,7 +7,7 @@ import (
 
 	"github.com/onsi/ginkgo/config"
 	"github.com/onsi/ginkgo/types"
-	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/pivotal-golang/lager"
+	"github.com/pivotal-golang/lager"
 )
 
 type SuiteStartSummary struct {

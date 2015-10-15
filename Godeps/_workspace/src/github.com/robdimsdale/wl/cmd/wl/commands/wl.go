@@ -11,9 +11,9 @@ import (
 
 	"gopkg.in/yaml.v2"
 
-	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/robdimsdale/wl"
-	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/robdimsdale/wl/logger"
-	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/robdimsdale/wl/oauth"
+	"github.com/robdimsdale/wl"
+	"github.com/robdimsdale/wl/logger"
+	"github.com/robdimsdale/wl/oauth"
 	"github.com/spf13/cobra"
 )
 

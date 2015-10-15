@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/robdimsdale/wl"
+	"github.com/robdimsdale/wl"
 )
 
 // Lists returns all lists the client has permission to access.

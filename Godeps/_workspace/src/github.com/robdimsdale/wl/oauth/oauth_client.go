@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"net/http/httputil"
 
-	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/robdimsdale/wl"
-	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/robdimsdale/wl/logger"
+	"github.com/robdimsdale/wl"
+	"github.com/robdimsdale/wl/logger"
 )
 
 // oauthClient is an implementation of wl.Client.

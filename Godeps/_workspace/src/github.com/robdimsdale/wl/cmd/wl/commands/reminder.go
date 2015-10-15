@@ -5,7 +5,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/robdimsdale/wl"
+	"github.com/robdimsdale/wl"
 	"github.com/spf13/cobra"
 )
 

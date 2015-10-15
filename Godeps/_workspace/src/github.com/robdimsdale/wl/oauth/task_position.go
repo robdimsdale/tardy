@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/robdimsdale/wl"
+	"github.com/robdimsdale/wl"
 )
 
 // TaskPositions gets all task positions for all lists.

@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/robdimsdale/wl/cmd/wl/commands"
+	"github.com/robdimsdale/wl/cmd/wl/commands"
 
 	"github.com/spf13/cobra"
 )

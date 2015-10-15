@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/robdimsdale/wl"
+	"github.com/robdimsdale/wl"
 )
 
 // Tasks gets all tasks for all lists.
