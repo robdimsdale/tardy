@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/gorilla/securecookie"
-	"github.com/gorilla/sessions"
-	"github.com/pivotal-golang/lager"
+	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/gorilla/securecookie"
+	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/gorilla/sessions"
+	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/pivotal-golang/lager"
 )
 
 type auth struct {
@@ -54,8 +54,6 @@ func (s auth) unauthenticatedAccessAllowedForURL(url string) bool {
 }
 
 func (s auth) validSession(w http.ResponseWriter, r *http.Request) bool {
-	var accessToken string
-
 	session, err := s.store.Get(r, "session-name")
 	if err != nil {
 		s.logger.Error("", err)
@@ -87,28 +85,30 @@ func (s auth) validSession(w http.ResponseWriter, r *http.Request) bool {
 		}
 	}
 
-	cookie, err := r.Cookie("session")
-	if err == nil {
-		cookieValue := make(map[string]string)
-		err = s.cookieHandler.Decode("session", cookie.Value, &cookieValue)
-		if err == nil {
-			accessToken = cookieValue["accessToken"]
-			if accessToken != "" {
-				session, err := s.store.Get(r, "session-name")
-				if err != nil {
-					s.logger.Error("", err)
-					http.Error(w, err.Error(), 500)
-					return false
-				}
+	// Apparently works fine without the code below
 
-				session.Values["accessToken"] = accessToken
-				session.Save(r, w)
-				s.logger.Debug("successfully validated via session")
-				return true
-			}
-		}
-	}
+	// cookie, err := r.Cookie("session")
+	// if err == nil {
+	// 	cookieValue := make(map[string]string)
+	// 	err = s.cookieHandler.Decode("session", cookie.Value, &cookieValue)
+	// 	if err == nil {
+	// 		accessToken = cookieValue["accessToken"]
+	// 		if accessToken != "" {
+	// 			session, err := s.store.Get(r, "session-name")
+	// 			if err != nil {
+	// 				s.logger.Error("", err)
+	// 				http.Error(w, err.Error(), 500)
+	// 				return false
+	// 			}
 
-	s.logger.Debug("failed validation via session")
-	return false
+	// 			session.Values["accessToken"] = accessToken
+	// 			session.Save(r, w)
+	// 			s.logger.Debug("successfully validated via session")
+	// 			return true
+	// 		}
+	// 	}
+	// }
+
+	// s.logger.Debug("failed validation via session")
+	// return false
 }

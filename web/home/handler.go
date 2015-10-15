@@ -6,12 +6,12 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gorilla/sessions"
-	"github.com/pivotal-golang/lager"
-	"github.com/robdimsdale/tardy-tmp"
-	"github.com/robdimsdale/wl"
-	"github.com/robdimsdale/wl/logger"
-	"github.com/robdimsdale/wl/oauth"
+	"github.com/robdimsdale/tardy"
+	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/gorilla/sessions"
+	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/pivotal-golang/lager"
+	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/robdimsdale/wl"
+	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/robdimsdale/wl/logger"
+	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/robdimsdale/wl/oauth"
 )
 
 type Handler interface {

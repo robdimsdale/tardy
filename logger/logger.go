@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/pivotal-golang/lager"
+	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/pivotal-golang/lager"
 )
 
 type LogLevel string

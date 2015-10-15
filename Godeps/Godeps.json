@@ -1,0 +1,34 @@
+{
+	"ImportPath": "github.com/robdimsdale/tardy",
+	"GoVersion": "go1.5.1",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/gorilla/context",
+			"Rev": "1c83b3eabd45b6d76072b66b746c20815fb2872d"
+		},
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Rev": "8965bfef36e398a40fa4afbe4e22eea61cb8db86"
+		},
+		{
+			"ImportPath": "github.com/gorilla/securecookie",
+			"Rev": "e95799a481bbcc3d01c2ad5178524cb8bec9f370"
+		},
+		{
+			"ImportPath": "github.com/gorilla/sessions",
+			"Rev": "f7261893ca3ea922c30eabe742c036d2c1de6e0a"
+		},
+		{
+			"ImportPath": "github.com/pivotal-golang/lager",
+			"Rev": "c88fa6d6c4d2f8a21a4599785211e41777750d34"
+		},
+		{
+			"ImportPath": "github.com/robdimsdale/wl",
+			"Comment": "v1.1.1-5-g5d1671b",
+			"Rev": "5d1671bb9bf53a61f5c8db8a00f8c62adcf33e81"
+		}
+	]
+}

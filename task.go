@@ -7,5 +7,5 @@ type Task struct {
 	Title       string    `json:"title"`
 	DueDate     time.Time `json:"due_date"`
 	CompletedAt time.Time `json:"completed_at"`
-	Days        int       `json:"days":`
+	Days        int       `json:"days"`
 }

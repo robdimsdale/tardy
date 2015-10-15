@@ -7,9 +7,9 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/gorilla/securecookie"
-	"github.com/gorilla/sessions"
-	"github.com/pivotal-golang/lager"
+	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/gorilla/securecookie"
+	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/gorilla/sessions"
+	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/pivotal-golang/lager"
 )
 
 //go:generate counterfeiter . Handler

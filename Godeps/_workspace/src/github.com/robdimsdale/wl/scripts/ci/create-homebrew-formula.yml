@@ -1,0 +1,12 @@
+---
+platform: linux
+
+image: docker:///robdimsdale/wl-1.5
+
+inputs:
+- name: wl
+- name: homebrew-tap
+- name: github-release
+
+run:
+  path: wl/scripts/ci/create-homebrew-formula

@@ -2,37 +2,42 @@ package main
 
 import (
 	"crypto/rand"
-	"flag"
 	"fmt"
 	"math/big"
 	"net/http"
 	"os"
 
-	"github.com/gorilla/mux"
-	"github.com/gorilla/securecookie"
-	"github.com/gorilla/sessions"
-	"github.com/robdimsdale/tardy-tmp/logger"
-	"github.com/robdimsdale/tardy-tmp/middleware"
-	"github.com/robdimsdale/tardy-tmp/web/home"
-	"github.com/robdimsdale/tardy-tmp/web/oauth"
+	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/gorilla/mux"
+	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/gorilla/securecookie"
+	"github.com/robdimsdale/tardy/Godeps/_workspace/src/github.com/gorilla/sessions"
+	"github.com/robdimsdale/tardy/logger"
+	"github.com/robdimsdale/tardy/middleware"
+	"github.com/robdimsdale/tardy/web/home"
+	"github.com/robdimsdale/tardy/web/oauth"
 )
 
 var (
-	clientID     = flag.String("clientID", "", "clientID")
-	clientSecret = flag.String("clientSecret", "", "clientSecret")
-
-	host = flag.String("host", "localhost", "host")
-	port = flag.Int("port", 12345, "port")
-
 	state string
 
 	accessToken string
 )
 
 func main() {
-	flag.Parse()
 
-	if *clientID == "" || *clientSecret == "" {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "12345"
+	}
+
+	redirectHost := os.Getenv("REDIRECT_HOST")
+	if redirectHost == "" {
+		redirectHost = fmt.Sprintf("http://localhost:%s", port)
+	}
+
+	clientID := os.Getenv("CLIENT_ID")
+	clientSecret := os.Getenv("CLIENT_SECRET")
+
+	if clientID == "" || clientSecret == "" {
 		fmt.Printf("clientID and clientSecret must be provided and non-empty\n")
 		os.Exit(2)
 	}
@@ -43,10 +48,10 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Printf("clientID: %s\n", *clientID)
-	fmt.Printf("clientSecret: %s\n", *clientID)
+	fmt.Printf("clientID: %s\n", clientID)
+	fmt.Printf("clientSecret: %s\n", clientID)
 
-	fmt.Printf("port: %d\n", *port)
+	fmt.Printf("port: %s\n", port)
 
 	state, err = createState()
 	if err != nil {
@@ -54,7 +59,7 @@ func main() {
 	}
 	fmt.Printf("state: %s\n", state)
 
-	oauthRedirectURI := fmt.Sprintf("http://localhost:%d/login-resp", *port)
+	oauthRedirectURI := fmt.Sprintf("%s/login-resp", redirectHost)
 
 	cookieHandler := securecookie.New(
 		securecookie.GenerateRandomKey(64),
@@ -63,7 +68,7 @@ func main() {
 
 	cookieStore := sessions.NewCookieStore([]byte("something-very-secret"))
 
-	homeHandler := home.NewHandler(logger, *clientID, cookieStore)
+	homeHandler := home.NewHandler(logger, clientID, cookieStore)
 
 	cookieMaxAge := 3600
 	loginHandler := oauth.NewHandler(
@@ -71,8 +76,8 @@ func main() {
 		cookieHandler,
 		cookieMaxAge,
 		cookieStore,
-		*clientID,
-		*clientSecret,
+		clientID,
+		clientSecret,
 		oauthRedirectURI,
 		state,
 	)
@@ -91,7 +96,8 @@ func main() {
 
 	handler := m.Wrap(rtr)
 
-	http.ListenAndServe(fmt.Sprintf(":%d", *port), handler)
+	err = http.ListenAndServe(fmt.Sprintf(":%s", port), handler)
+	panic(err)
 }
 
 func createState() (string, error) {

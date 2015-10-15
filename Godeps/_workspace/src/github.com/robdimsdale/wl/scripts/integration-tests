@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -eux
+
+NORACE=${NORACE:-false}
+SLOW_SPEC_THRESHOLD=${SLOW_SPEC_THRESHOLD:-10}
+
+MY_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# This script expects that it lives one directory below the base directory.
+BASE_DIR="$( cd ${MY_DIR}/.. && pwd )"
+
+pushd ${BASE_DIR}
+  if [ "${NORACE}" = "true" ]; then
+    ginkgo \
+      -p \
+      -r \
+      -randomizeAllSpecs \
+      -failOnPending \
+      -slowSpecThreshold="${SLOW_SPEC_THRESHOLD}" \
+      "$@" \
+      integration_tests
+  else
+    ginkgo \
+      -p \
+      -r \
+      -race \
+      -randomizeAllSpecs \
+      -failOnPending \
+      -slowSpecThreshold="${SLOW_SPEC_THRESHOLD}" \
+      "$@" \
+      integration_tests
+  fi
+popd
