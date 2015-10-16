@@ -34,10 +34,21 @@ func (s auth) Wrap(next http.Handler) http.Handler {
 			s.validSession(rw, req) {
 			next.ServeHTTP(rw, req)
 		} else {
-			s.logger.Debug("not logged in - redirecting")
-			http.Redirect(rw, req, "/login", http.StatusFound)
+			s.handleUnauthenticatedRequest(rw, req)
 		}
 	})
+}
+
+func (s auth) handleUnauthenticatedRequest(w http.ResponseWriter, r *http.Request) {
+	url := r.URL.Path
+	if strings.HasPrefix(url, "/api") {
+		s.logger.Debug("unauthorized request", lager.Data{"url": url})
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	s.logger.Debug("not logged in - redirecting", lager.Data{"url": url})
+	http.Redirect(w, r, "/login", http.StatusFound)
 }
 
 func (s auth) unauthenticatedAccessAllowedForURL(url string) bool {

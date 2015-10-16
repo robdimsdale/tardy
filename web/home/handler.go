@@ -1,17 +1,10 @@
 package home
 
 import (
-	"encoding/json"
-	"fmt"
+	"html/template"
 	"net/http"
-	"time"
 
-	"github.com/gorilla/sessions"
 	"github.com/pivotal-golang/lager"
-	"github.com/robdimsdale/tardy"
-	"github.com/robdimsdale/wl"
-	"github.com/robdimsdale/wl/logger"
-	"github.com/robdimsdale/wl/oauth"
 )
 
 type Handler interface {
@@ -19,93 +12,20 @@ type Handler interface {
 }
 
 type handler struct {
-	logger   lager.Logger
-	clientID string
-	store    *sessions.CookieStore
+	logger    lager.Logger
+	templates *template.Template
 }
 
 func NewHandler(
 	logger lager.Logger,
-	clientID string,
-	store *sessions.CookieStore,
+	templates *template.Template,
 ) Handler {
 	return &handler{
-		logger:   logger.Session("handler-home"),
-		clientID: clientID,
-		store:    store,
+		logger:    logger.Session("handler-home"),
+		templates: templates,
 	}
 }
 
 func (h handler) Home(w http.ResponseWriter, r *http.Request) {
-	session, err := h.store.Get(r, "session-name")
-	if err != nil {
-		h.logger.Error("", err)
-		http.Error(w, err.Error(), 500)
-		return
-	}
-
-	accessTokenInterface := session.Values["accessToken"]
-	if accessTokenInterface == nil {
-		err := fmt.Errorf("accessToken not found in session")
-		h.logger.Error("", err)
-		http.Error(w, err.Error(), 500)
-		return
-	}
-
-	accessToken, ok := accessTokenInterface.(string)
-	if !ok {
-		err := fmt.Errorf("failed to convert %v into string", accessTokenInterface)
-		h.logger.Error("", err)
-		http.Error(w, err.Error(), 500)
-		return
-	}
-
-	if accessToken == "" {
-		err := fmt.Errorf("accessToken empty in session")
-		h.logger.Error("", err)
-		http.Error(w, err.Error(), 500)
-		return
-	}
-
-	client := oauth.NewClient(
-		accessToken,
-		h.clientID,
-		wl.APIURL,
-		logger.NewLogger(logger.INFO),
-	)
-
-	completed := true
-	completedTasks, err := client.CompletedTasks(completed)
-	if err != nil {
-		fmt.Printf("err getting tasks: %s\n", err.Error())
-	}
-
-	tasks, err := tardyTasks(completedTasks)
-	if err != nil {
-		fmt.Printf("err converting tasks: %s\n", err.Error())
-	}
-
-	err = json.NewEncoder(w).Encode(tasks)
-	if err != nil {
-		fmt.Printf("err serializing completed: %s\n", err.Error())
-	}
-}
-
-func tardyTasks(wlTasks []wl.Task) ([]tardy.Task, error) {
-	tasks := []tardy.Task{}
-	for _, t := range wlTasks {
-		if (t.DueDate != time.Time{}) {
-			days := int(t.CompletedAt.Sub(t.DueDate).Hours() / 24)
-
-			tardyTask := tardy.Task{
-				ID:          t.ID,
-				Title:       t.Title,
-				DueDate:     t.DueDate,
-				CompletedAt: t.CompletedAt,
-				Days:        days,
-			}
-			tasks = append(tasks, tardyTask)
-		}
-	}
-	return tasks, nil
+	h.templates.ExecuteTemplate(w, "homepage", nil)
 }

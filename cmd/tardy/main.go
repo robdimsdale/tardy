@@ -11,6 +11,7 @@ import (
 	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
 	"github.com/robdimsdale/tardy/api/tasks"
+	"github.com/robdimsdale/tardy/filesystem"
 	"github.com/robdimsdale/tardy/logger"
 	"github.com/robdimsdale/tardy/middleware"
 	"github.com/robdimsdale/tardy/web/home"
@@ -69,7 +70,12 @@ func main() {
 
 	cookieStore := sessions.NewCookieStore([]byte("something-very-secret"))
 
-	homeHandler := home.NewHandler(logger, clientID, cookieStore)
+	templates, err := filesystem.LoadTemplates()
+	if err != nil {
+		logger.Fatal("exiting", err)
+	}
+
+	homeHandler := home.NewHandler(logger, templates)
 	tasksHandler := tasks.NewHandler(logger, clientID, cookieStore)
 
 	cookieMaxAge := 3600
