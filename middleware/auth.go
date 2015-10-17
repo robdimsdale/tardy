@@ -98,7 +98,7 @@ func (s auth) validSession(w http.ResponseWriter, r *http.Request) bool {
 			s.logger.Info("accessToken empty in session - redirecting")
 			return false
 		} else {
-			s.logger.Debug("accessToken found in session")
+			s.logger.Debug("accessToken found in session", lager.Data{"accessToken": accessToken})
 			return true
 		}
 	}

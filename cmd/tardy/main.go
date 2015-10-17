@@ -14,6 +14,7 @@ import (
 	"github.com/robdimsdale/tardy/filesystem"
 	"github.com/robdimsdale/tardy/logger"
 	"github.com/robdimsdale/tardy/middleware"
+	"github.com/robdimsdale/tardy/web/generated/static"
 	"github.com/robdimsdale/tardy/web/home"
 	"github.com/robdimsdale/tardy/web/oauth"
 )
@@ -90,7 +91,11 @@ func main() {
 		state,
 	)
 
+	staticFileServer := http.FileServer(static.FS(false))
+
 	rtr := mux.NewRouter()
+
+	rtr.PathPrefix("/static/").Handler(staticFileServer)
 
 	rtr.HandleFunc("/", homeHandler.Home).Methods("GET")
 

@@ -1,4 +1,4 @@
-package templates
+package static
 
 import (
 	"bytes"
@@ -185,27 +185,34 @@ func FSMustString(useLocal bool, name string) string {
 
 var _escData = map[string]*_escFile{
 
-	"/templates/head.html.tmpl": {
-		local: "web/assets/templates/head.html.tmpl",
-		size:  793,
+	"/static/css/home.css": {
+		local: "web/assets/static/css/home.css",
+		size:  189,
 		compressed: `
-H4sIAAAJbogA/5RTzW7UMBC+71MYn4lNW4EQiiOh0gMnOBQJjrP2bO3g2Kk9mzaK+u44yZaWRZW6yiHj
-sb8ff5lMk8GdC8i4RTD84WFTv/ny7fL61/crZqnzzaaeX8xDuFEcA282jNXz2bkoZYcETFtIGUnxPe2q
-j/z5liXqK7zdu0Hxn9WPz9Vl7Hogt/XImY6BMBTc1yuF5gb/QQboUPHB4V0fEz07fOcMWWVwcBqrZfGW
-ueDIga+yBo/q7JGIHHlsriGZsZbrYrPuZJ1cT4zGvogQ3pNsYYC1y1lOWnEpdTQo2ts9plHo2Mm1rM7F
-WXk6F0SbeVPLFdWcQByQTACxjZEyJei1CYvA34a8EOfinWzzU+slQe/Cb5bQK55p9JgtYhGyCXenKOl8
-LFU6/Citxf38RfOnEo4JbRbax73ZeUi40EIL99K7bZbmojC/Fx9K8ej8vzl5uskrrpKpjI1ejNrY4cHf
-qzM/wNsD+jjIWq5DPU0YTPkN/gQAAP//nN+ZSRkDAAA=
+H4sIAAAJbogA/0zMwQrCMAyA4XufIuDVjXqtZx8kc9lWDGlpKlRk727cFL0l5M/XD1jg6abIHEArEQ98
+p7NbneuxRYVKrb6DJDXAyecGiqKdUonTX5axLsfPzFHIXgB2VZIYCKaXdKMAB+/9ti+YqSsko1kyB7iW
+qPkyzqQ73H70xo12Znx8xdW9AgAA//97HuIFvQAAAA==
 `,
 	},
 
-	"/templates/home.html.tmpl": {
-		local: "web/assets/templates/home.html.tmpl",
-		size:  270,
+	"/static/js/home.js": {
+		local: "web/assets/static/js/home.js",
+		size:  2500,
 		compressed: `
-H4sIAAAJbogA/1yPQc7CIBCF1/9/ipE9IXWNnMILjGVsm9DSAKk2pHd3KorR3cz7eI95OVu6DhOB6P1I
-M3Yktu0/50Tj7DDtOqHdNQB98XY1PPBohwVahzGeROunhBwRRGHfNPhb1X99Tt6jbI7M/xj1jTljsKtW
-PH0cii01uCzvLS5dDesxJGG0Yu114vMt6IOUUE8EKXeqVanCX6XRGe5Lk+WOjwAAAP//+BtKZQ4BAAA=
+H4sIAAAJbogA/7RWzW7bOBC++ykIdg8UrFByul2gMfYQFNjbPkHRAy3RNreUaJCjRELgd98hqTii/NMg
+QA0EkDQz33z8OD+hnZPEgVUVrOli8QerTdU1soWMWynqgTCy7doKlGlZ9rJYPAlLWmMbob8ZbSz5m1AH
+UuqN7iRdk6IgtdyKTgOpvD34a7Xbg7SngE9fH799/WcV3Ucj2XRAnGqUxgAwY46YrxF2p1qMfAFzeCD3
+ZU6sj3ogn/FxYwBME5+13OLXP8tjviD4e1Y17DFutfqrJHcjDvdOb28BKbrvpX9G/y/lxB1zvr3EZOtF
+8H8VhljZ1tKyWoDIyEuwEeKZ9whWf+auElpyrVopLMtG+/zHa9MI1TL0lz3gDQS8/E3+GrExFXS2JTVX
+9Zocs6tgVrQ7yb6jJkGEH9nIOfIaPsDr+xU78UiNJ+7pTti+nLjWYnDrY5bfRBD9xxF+/EqHeLV5OdOh
+f+yVG7V42nGBb4kOUSHWJ9+MVf52aKwFOlP2fYjDRURfmRO8ai8scHE4YHkxuqNJjACwjFZaOEdzQnvi
+U11yAZTAbbGdvFt40QIkK3NKlq8lvyQ0S2ORpWZBno/xGS7wCZjDJUwntazgEc2Ub4RNw3xVxN46feUo
+FzZcdiJjMfwmnzPUaO/plQbDYsQWy3yPnUcN16IG9q+Afahl7LxYttkcBIfeiBPVvwY23s0doo5Il9nc
+RgmExMaxE0pALM9ojWhhXCDYPUlLtPViqupnkidXb/Mu/p5VW5tnbvBakBnAwT0UxXPn56NWDnhlmuJT
+AcL9dIUvwKjyBOJ4lrYxuKPMk7TzIyaJfcOFKmKwxwJLbDyUvYpLjNedFeHxvixnfqkEq7nZwYC9S7dK
+6ztzEJUCXwkl/5K94wAd/EK633CC+3cdYHWd/mt/4Sx7AAVapk0EuKnY1QXlx0oeLznM7xTbX/pxnAN+
+coZJME7OKAPl4dsk5ex4cb8vk8W+TBb7WeipWU6Tb7Lml+manwZfGHq35ys94xW1SNL5qTtKgFNh+m9E
+bAnU4j/nS6gQB1U8rWLjYKLoil5H/Ps/AAD//7Ji4MXECQAA
 `,
 	},
 
@@ -214,8 +221,18 @@ PH0cii01uCzvLS5dDesxJGG0Yu114vMt6IOUUE8EKXeqVanCX6XRGe5Lk+WOjwAAAP//+BtKZQ4BAAA=
 		local: "web/assets",
 	},
 
-	"/templates": {
+	"/static": {
 		isDir: true,
-		local: "web/assets/templates",
+		local: "web/assets/static",
+	},
+
+	"/static/css": {
+		isDir: true,
+		local: "web/assets/static/css",
+	},
+
+	"/static/js": {
+		isDir: true,
+		local: "web/assets/static/js",
 	},
 }

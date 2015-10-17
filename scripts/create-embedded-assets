@@ -14,11 +14,11 @@ pushd "${BASE_DIR}"
     -o ./web/generated/templates/fs.go \
     ./web/assets/templates/
 
-  # esc \
-  #   -pkg=static \
-  #   -prefix web/assets \
-  #   -o ./web/static/fs.go \
-  #   ./web/assets/static/
+  esc \
+    -pkg=static \
+    -prefix web/assets \
+    -o ./web/generated/static/fs.go \
+    ./web/assets/static/
 popd
 
 echo "All embedded assets created successfully"
