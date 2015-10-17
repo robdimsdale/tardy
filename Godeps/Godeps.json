@@ -6,6 +6,10 @@
 	],
 	"Deps": [
 		{
+			"ImportPath": "github.com/gorilla/context",
+			"Rev": "1c83b3eabd45b6d76072b66b746c20815fb2872d"
+		},
+		{
 			"ImportPath": "github.com/gorilla/mux",
 			"Rev": "8965bfef36e398a40fa4afbe4e22eea61cb8db86"
 		},
