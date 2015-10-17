@@ -1,4 +1,4 @@
-package oauth
+package login
 
 import (
 	"bytes"
@@ -42,7 +42,7 @@ func NewHandler(
 	secretState string,
 ) Handler {
 	return &handler{
-		logger:        logger.Session("handler-oauth"),
+		logger:        logger.Session("handler-login"),
 		cookieHandler: cookieHandler,
 		cookieMaxAge:  cookieMaxAge,
 		store:         store,
@@ -54,7 +54,7 @@ func NewHandler(
 }
 
 func (h handler) LoginGET(w http.ResponseWriter, r *http.Request) {
-	h.logger.Info("received request at")
+	h.logger.Debug("received request")
 
 	redirectQueryString := fmt.Sprintf(
 		"client_id=%s&redirect_uri=%s&state=%s",
@@ -75,7 +75,7 @@ func (h handler) LoginGET(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h handler) LoginResponse(w http.ResponseWriter, r *http.Request) {
-	h.logger.Info("received login response", lager.Data{"url": r.URL})
+	h.logger.Debug("received login response", lager.Data{"url": r.URL})
 
 	values := r.URL.Query()
 	returnedState := values["state"][0]
@@ -184,7 +184,7 @@ func (h handler) setSession(
 
 		accessTokenInterface := session.Values["accessToken"]
 		if accessTokenInterface == nil {
-			h.logger.Info("accessToken nil in session - redirecting")
+			h.logger.Debug("accessToken nil in session - redirecting")
 			return
 		} else {
 			accessToken, ok := accessTokenInterface.(string)
@@ -196,7 +196,7 @@ func (h handler) setSession(
 			}
 
 			if accessToken == "" {
-				h.logger.Info("accessToken empty in session - redirecting")
+				h.logger.Debug("accessToken empty in session - redirecting")
 				return
 			} else {
 				h.logger.Debug("accessToken found in session", lager.Data{"accessToken": accessToken})

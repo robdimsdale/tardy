@@ -27,5 +27,6 @@ func NewHandler(
 }
 
 func (h handler) Home(w http.ResponseWriter, r *http.Request) {
+	h.logger.Debug("received request")
 	h.templates.ExecuteTemplate(w, "homepage", nil)
 }

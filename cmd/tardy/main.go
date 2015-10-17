@@ -16,7 +16,7 @@ import (
 	"github.com/robdimsdale/tardy/middleware"
 	"github.com/robdimsdale/tardy/web/generated/static"
 	"github.com/robdimsdale/tardy/web/home"
-	"github.com/robdimsdale/tardy/web/oauth"
+	"github.com/robdimsdale/tardy/web/login"
 )
 
 var (
@@ -80,7 +80,7 @@ func main() {
 	tasksHandler := tasks.NewHandler(logger, clientID, cookieStore)
 
 	cookieMaxAge := 3600
-	loginHandler := oauth.NewHandler(
+	loginHandler := login.NewHandler(
 		logger,
 		cookieHandler,
 		cookieMaxAge,
@@ -107,6 +107,7 @@ func main() {
 	a.HandleFunc("/tasks", tasksHandler.Tasks).Methods("GET")
 
 	m := middleware.Chain{
+		middleware.NewHTTPSEnforcer(logger),
 		middleware.NewAuth(logger, cookieHandler, cookieStore),
 	}
 

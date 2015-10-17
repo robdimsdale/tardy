@@ -22,7 +22,7 @@ func NewAuth(
 	store *sessions.CookieStore,
 ) Middleware {
 	return auth{
-		logger:        logger.Session("middleware-session"),
+		logger:        logger.Session("middleware-auth"),
 		cookieHandler: cookieHandler,
 		store:         store,
 	}
@@ -83,7 +83,7 @@ func (s auth) validSession(w http.ResponseWriter, r *http.Request) bool {
 
 	accessTokenInterface := session.Values["accessToken"]
 	if accessTokenInterface == nil {
-		s.logger.Info("accessToken nil in session - redirecting")
+		s.logger.Debug("accessToken nil in session - redirecting")
 		return false
 	} else {
 		accessToken, ok := accessTokenInterface.(string)
@@ -95,38 +95,11 @@ func (s auth) validSession(w http.ResponseWriter, r *http.Request) bool {
 		}
 
 		if accessToken == "" {
-			s.logger.Info("accessToken empty in session - redirecting")
+			s.logger.Debug("accessToken empty in session - redirecting")
 			return false
 		} else {
 			s.logger.Debug("accessToken found in session", lager.Data{"accessToken": accessToken})
 			return true
 		}
 	}
-
-	// Apparently works fine without the code below
-
-	// cookie, err := r.Cookie("session")
-	// if err == nil {
-	// 	cookieValue := make(map[string]string)
-	// 	err = s.cookieHandler.Decode("session", cookie.Value, &cookieValue)
-	// 	if err == nil {
-	// 		accessToken = cookieValue["accessToken"]
-	// 		if accessToken != "" {
-	// 			session, err := s.store.Get(r, "session-name")
-	// 			if err != nil {
-	// 				s.logger.Error("", err)
-	// 				http.Error(w, err.Error(), 500)
-	// 				return false
-	// 			}
-
-	// 			session.Values["accessToken"] = accessToken
-	// 			session.Save(r, w)
-	// 			s.logger.Debug("successfully validated via session")
-	// 			return true
-	// 		}
-	// 	}
-	// }
-
-	// s.logger.Debug("failed validation via session")
-	// return false
 }
