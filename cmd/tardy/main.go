@@ -107,6 +107,8 @@ func main() {
 	a.HandleFunc("/tasks", tasksHandler.Tasks).Methods("GET")
 
 	m := middleware.Chain{
+		middleware.NewPanicRecovery(logger),
+		middleware.NewLogger(logger),
 		middleware.NewHTTPSEnforcer(logger),
 		middleware.NewAuth(logger, cookieHandler, cookieStore),
 	}
