@@ -1,13 +1,18 @@
 "use strict;"
 
 $(document).ready ( function(){
+
+function getDate(d) {
+  return new Date(d.due_date);
+}
+
 var margin = {top: 20, right: 30, bottom: 30, left: 40},
     width = 1160 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
     function render(data) {
-      var x = d3.scale.linear()
-                      .domain(d3.extent(data, function(d) { return d.id; }))
+      var x = d3.time.scale()
+                      .domain(d3.extent(data, function(d) { return getDate(d); }))
                       .range([0, width]);
 
       var y = d3.scale.linear()
@@ -38,7 +43,7 @@ var margin = {top: 20, right: 30, bottom: 30, left: 40},
           .data(data)
         .enter().append("rect")
           .attr("class", "bar")
-          .attr("x", function(d) { return x(d.id); })
+          .attr("x", function(d) { return x(getDate(d)); })
           .attr("y", function(d) { return y(Math.max(0, d.days)); })
           .attr("height", function(d) { return Math.abs(y(d.days) - y(0)); })
           .attr("width", 2 )
