@@ -69,7 +69,7 @@ func main() {
 		securecookie.GenerateRandomKey(32),
 	)
 
-	cookieStore := sessions.NewCookieStore([]byte("something-very-secret"))
+	cookieStore := sessions.NewCookieStore(securecookie.GenerateRandomKey(64))
 
 	templates, err := filesystem.LoadTemplates()
 	if err != nil {
